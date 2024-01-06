@@ -3,9 +3,9 @@ for (let num=20; num <= 30; num+=0.5) {
   }
 
 
-for(let dol = 10; dol <= 100; dol+= 10) 
+for(let dol = 10; dol <= 100; dol+= 10){
 console.log(`${dol}$ =  ${dol * 27}`)
-
+}
 
 let p = 70;
 for(let i = 1; i < 100 ; i++){
