@@ -1,33 +1,49 @@
-for (let num=20; num <= 30; num+=0.5) {
-    console.log(num) 
-  }
-
-
-for(let dol = 10; dol <= 100; dol+= 10){
-console.log(`${dol}$ =  ${dol * 27}`)
+for (let num = 20; num <= 30; num += 0.5) {
+    console.log(num);
 }
 
-let p = 70;
-for(let i = 1; i < 100 ; i++){
-    let n = i**2;
-    if(p > n){
-        console.log(n)
+for (let dol = 10; dol <= 100; dol += 10) {
+    console.log(`${dol}$ = ${dol * 27} грн`);
+}
+let numN = prompt('Введіть число N: ');
+for (let i = 1; i <= 100; i++) {
+    let square = i ** 2;
+    if (square <= numN) {
+        console.log(i);
     }
- 
 }
 
-let n = prompt('введите число от 1 до 10'); 
-nextPrime:
-for (let i = 2; i <= n ; i++){
-    for(let j = 2; j < i; j++){
-    if(i % j ==0) continue nextPrime;
-}
-console.log(i);
+let integer = prompt('Введіть ціле число: ');
+
+function isPrime(num) {
+    if (num <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+    }
+    return true;
 }
 
-let number = prompt('Введите число , что бы проверить деление на 3: ')
-if(number % 3 === 0 && number){
-    alert('Число можно поделить на 3')
-}else{
-    alert('Число нельза поделить на 3');
+for (let i = 2; i <= integer; i++) {
+    if (isPrime(i)) {
+        console.log(i);
+    }
+}
+
+
+let numInteger = prompt('Введіть ціле число: ');
+
+function isPowerOfThree(num) {
+    while (num > 1) {
+        if (num % 3 !== 0) {
+            return false;
+        }
+        num /= 3;
+    }
+    return num === 1;
+}
+
+if (isPowerOfThree(numInteger)) {
+    console.log('Число є ступенем трійки');
+} else {
+    console.log('Число не є ступенем трійки');
 }
