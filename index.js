@@ -58,5 +58,4 @@ let users = [
 const userPhone = users.filter(user => parseFloat(user.balance.replace('$', '').replace(',', '')) >= 2000).map(user => user.phone);
 console.log(userPhone);
 const total = users.reduce((a , user) => a + parseFloat(user.balance.replace('$', '').replace(',', '')), 0)
-
 console.log(total);
