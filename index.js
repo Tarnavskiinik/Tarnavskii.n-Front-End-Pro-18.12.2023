@@ -10,19 +10,23 @@ class Person {
 }
 
 class Car {
-    constructor(brand, model, year, licensePlate, owner) {
+    constructor(brand, model, year, licensePlate) {
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.licensePlate = licensePlate;
         this.owner = null;
-        if(owner.age >= 18){
-            this.owner = owner
-        } else{
-            console.log('Вам немає 18 років');
+    }
+    
+    setOwner(owner) {
+        if (owner.age >= 18) {
+            this.owner = owner;
+        } else {
+            console.log('Власник повинен бути старше 18 років');
         }
     }
-    ownerInfo(){
+    
+    ownerInfo() {
         console.log(`Марка: ${this.brand}, Модель: ${this.model}, Рік виписку: ${this.year}, Номерний знак: ${this.licensePlate}`);
         if (this.owner) {
             console.log('Інформація про власника:');
@@ -33,15 +37,17 @@ class Car {
     }
 }
 
-
 let person = new Person('Іван', 30);
 let secondPerson = new Person("Марія", 17);
 
-let car = new Car('Toyota', 'Corolla', 2015, 'ВС1234АА', person);
-let secondCar = new Car('Honda', 'Civic', 2020, 'ВС5678ВВ', secondPerson);
+let car = new Car('Toyota', 'Corolla', 2015, 'ВС1234АА');
+car.setOwner(person);
+
+let secondCar = new Car('Honda', 'Civic', 2020, 'ВС5678ВВ');
+secondCar.setOwner(secondPerson);
 
 console.log('Інформація про автомобіль 1:');
 car.ownerInfo();
-console.log('                ');
+console.log();
 console.log('Інформація про автомобіль 2:');
 secondCar.ownerInfo();
