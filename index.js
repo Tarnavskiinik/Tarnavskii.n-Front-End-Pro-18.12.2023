@@ -26,17 +26,22 @@ class Hamburger {
     }
 }
 
-const smalSize = { price: 50, calories: 20 };
-const largeSize = { price: 100, calories: 40 };
-const cheese = { price: 10, calories: 20 };
-const salad = { price: 20, calories: 5 };
-const potato = { price: 15, calories: 10 };
-const spice = { price: 15, calories: 0 };
-const mayo = { price: 20, calories: 5 };
+const SIZE_SMALL = { price: 50, calories: 20 };
+const SIZE_LARGE = { price: 100, calories: 40 };
+const STUFFING_CHEESE = { price: 10, calories: 20 };
+const STUFFING_SALAD = { price: 20, calories: 5 };
+const STUFFING_POTATO = { price: 15, calories: 10 };
+const TOPPING_SPICE = { price: 15, calories: 0 };
+const TOPPING_MAYO = { price: 20, calories: 5 };
 
-const hamburger = new Hamburger(smalSize, cheese);
-hamburger.addTopping(mayo);
+const hamburger = new Hamburger(SIZE_SMALL, STUFFING_CHEESE);
+
+hamburger.addTopping(TOPPING_MAYO);
+
 console.log(hamburger.calculateCalories());
+
 console.log(hamburger.calculatePrice());
-hamburger.addTopping(spice);
+
+hamburger.addTopping(TOPPING_SPICE);
+
 console.log(hamburger.calculatePrice());
