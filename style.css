@@ -1,0 +1,7 @@
+.block{
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    display: none;
+    background-color: blue;
+}
