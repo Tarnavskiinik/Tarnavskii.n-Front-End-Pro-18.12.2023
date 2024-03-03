@@ -1,0 +1,8 @@
+.images{
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
+.smile{
+    cursor: pointer;
+}
