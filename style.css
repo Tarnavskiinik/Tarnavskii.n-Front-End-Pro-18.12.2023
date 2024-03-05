@@ -1,0 +1,15 @@
+.images{
+    display: flex;
+    gap: 20px;
+}
+.image{
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.counter{
+    width: 30%;
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+}
