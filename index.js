@@ -7,7 +7,7 @@ function generateList(array) {
             html += generateList(item);
             html += '</li>';
         } else {
-            html += 'li>' + item + '</li>';
+            html += '<li>' + item + '</li>';
         }
     });
     html += "</ul>";
