@@ -1,0 +1,30 @@
+.container{
+    width: 500px;
+    height: 30vh;
+    align-items: center;
+    background-color: blue;
+    margin: 0 auto;
+}
+.time{
+    width: 100%;
+    font-size: 130px;
+    font-weight: 500;
+    color: white;
+    align-items: center;
+}
+.timer{
+    width: 200px;
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: purple;
+}
+.alarmClockButton{
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: purple;
+    color: white;
+}
