@@ -6,6 +6,7 @@ const orderForm = document.querySelector('.order-form');
 const buttonForm = document.querySelector('.button-ord');
 const inpValue = document.querySelectorAll('input , textarea')
 let valueProduct = ''
+let isValid = true;
 
 category.forEach(category => {
     category.addEventListener('click', () => {
@@ -94,7 +95,6 @@ information.addEventListener('click', e => {
             formValue.forEach((value , key) => {
                 if(!value.trim()){
                     alert(`Введите значение для поля '${key}'`)
-                    blockForm.style.display = 'none'
                     return
                 }else{
                     const keyValueElement = document.createElement('p');
@@ -103,7 +103,10 @@ information.addEventListener('click', e => {
                     orderForm.style.display = 'none'
                 }
             })
-            form.appendChild(blockForm);
+            if (isValid) {
+                form.appendChild(blockForm);
+                orderForm.style.display = 'none';
+            }
         })
     }
 });
