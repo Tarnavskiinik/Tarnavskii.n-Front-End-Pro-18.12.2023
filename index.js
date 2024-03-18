@@ -6,7 +6,6 @@ const orderForm = document.querySelector('.order-form');
 const buttonForm = document.querySelector('.button-ord');
 const inpValue = document.querySelectorAll('input , textarea')
 let valueProduct = ''
-let isValid = true;
 
 category.forEach(category => {
     category.addEventListener('click', () => {
@@ -83,27 +82,35 @@ product.addEventListener('click', (e) => {
     });
 });
 
-buttonForm.addEventListener('click', (e) =>{
+buttonForm.addEventListener('click', (e) => {
     e.preventDefault();
-    const formValue = new FormData(orderForm)
-    const blockForm = document.createElement('div')
-    blockForm.className = 'requisites'
+    const formValue = new FormData(orderForm);
+    const blockForm = document.createElement('div');
+    blockForm.className = 'requisites';
     const descriptionElement = document.createElement('p');
     descriptionElement.textContent = valueProduct;
     blockForm.appendChild(descriptionElement);
+    
+    let invalidFields = []; 
+
     formValue.forEach((value , key) => {
-        if(!value.trim()){
-            alert(`Введите значение для поля '${key}'`)
-            return
-        }else{
+        if (!value.trim()) {
+            invalidFields.push(key);
+        }else {
             const keyValueElement = document.createElement('p');
-            keyValueElement.textContent = ` ${key}: ${value}`;
+            keyValueElement.textContent = `${key}: ${value}`;
             blockForm.appendChild(keyValueElement);
-            orderForm.style.display = 'none'
         }
-    })
-    if (isValid) {
-        form.appendChild(blockForm);
+    });
+
+    if (invalidFields.length === 0) {
         orderForm.style.display = 'none';
+        form.appendChild(blockForm);
+    } else {
+        let errorMessage = 'Пожалуйста, заполните все поля формы корректно: ';
+        invalidFields.forEach(field => {
+            errorMessage += `${field} , `;
+        });
+        alert(errorMessage);
     }
 });
