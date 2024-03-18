@@ -73,40 +73,37 @@ product.addEventListener('click', (e) => {
     buyButton.className = 'buy-button';
     buyButton.textContent = 'Купить';
     information.appendChild(buyButton); 
-});
 
-information.addEventListener('click', e => {
-    const target = e.target;
-    if (target.classList.contains('buy-button')) {
+    buyButton.addEventListener('click', () => {
         let formDiv = document.createElement('div')
-
         form.appendChild(formDiv)
         orderForm.style.display = 'block'
         information.innerHTML = '';
         product.innerHTML = '';  
-        buttonForm.addEventListener('click', (e) =>{
-            e.preventDefault();
-            const formValue = new FormData(orderForm)
-            const blockForm = document.createElement('div')
-            blockForm.className = 'requisites'
-            const descriptionElement = document.createElement('p');
-            descriptionElement.textContent = valueProduct;
-            blockForm.appendChild(descriptionElement);
-            formValue.forEach((value , key) => {
-                if(!value.trim()){
-                    alert(`Введите значение для поля '${key}'`)
-                    return
-                }else{
-                    const keyValueElement = document.createElement('p');
-                    keyValueElement.textContent = ` ${key}: ${value}`;
-                    blockForm.appendChild(keyValueElement);
-                    orderForm.style.display = 'none'
-                }
-            })
-            if (isValid) {
-                form.appendChild(blockForm);
-                orderForm.style.display = 'none';
-            }
-        })
+    });
+});
+
+buttonForm.addEventListener('click', (e) =>{
+    e.preventDefault();
+    const formValue = new FormData(orderForm)
+    const blockForm = document.createElement('div')
+    blockForm.className = 'requisites'
+    const descriptionElement = document.createElement('p');
+    descriptionElement.textContent = valueProduct;
+    blockForm.appendChild(descriptionElement);
+    formValue.forEach((value , key) => {
+        if(!value.trim()){
+            alert(`Введите значение для поля '${key}'`)
+            return
+        }else{
+            const keyValueElement = document.createElement('p');
+            keyValueElement.textContent = ` ${key}: ${value}`;
+            blockForm.appendChild(keyValueElement);
+            orderForm.style.display = 'none'
+        }
+    })
+    if (isValid) {
+        form.appendChild(blockForm);
+        orderForm.style.display = 'none';
     }
 });
