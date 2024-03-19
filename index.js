@@ -30,5 +30,5 @@ but.addEventListener('click', (e) => {
     languagesResponse.textContent = selectedLanguages.join(', ');
     responsesValue.appendChild(languagesResponse);
     responses.appendChild(responsesValue);
-    formRegistr.style.display = 'none'
+    formRegistr.style.display = 'none';
 });
