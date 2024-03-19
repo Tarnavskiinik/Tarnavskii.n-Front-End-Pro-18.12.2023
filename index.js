@@ -13,14 +13,22 @@ but.addEventListener('click', (e) => {
     responsesValue.className = 'responses-value';
 
     inputValue.forEach(input => {
+
         if (input.type === 'checkbox' && input.checked) {
             selectedLanguages.push(input.value);
         } else if (input.type === 'radio' && input.checked) {
-            responsesValue.innerHTML += input.value + '<br>';
-        } else if (input.type !== 'checkbox') {
-            responsesValue.innerHTML += input.value + '<br>';
+            let radioResponse = document.createElement('div');
+            radioResponse.textContent = input.value;
+            responsesValue.appendChild(radioResponse);
+        }else if (input.type !== 'checkbox' && input.type !=='radio') {
+            let textResponse = document.createElement('div');
+            textResponse.textContent = input.value;
+            responsesValue.appendChild(textResponse);
         }
     });
-    responsesValue.innerHTML +=  selectedLanguages.join(', ') + '<br>';
-        responses.appendChild(responsesValue);
+    let languagesResponse = document.createElement('div');
+    languagesResponse.textContent = selectedLanguages.join(', ');
+    responsesValue.appendChild(languagesResponse);
+    responses.appendChild(responsesValue);
+    formRegistr.style.display = 'none'
 });
