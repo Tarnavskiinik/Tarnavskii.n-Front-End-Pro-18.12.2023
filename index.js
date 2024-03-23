@@ -1,13 +1,15 @@
-const category = Array.from(document.querySelectorAll('.category'));
-const product = document.querySelector('.product');
-const information = document.querySelector('.information');
-const form = document.querySelector('.form');
+const categoryButtons = document.querySelectorAll('.category');
+const productDiv = document.querySelector('.product');
+const informationDiv = document.querySelector('.information');
+const formDiv = document.querySelector('.form');
 const orderForm = document.querySelector('.order-form');
 const buttonForm = document.querySelector('.button-ord');
-const inpValue = document.querySelectorAll('input , textarea')
-let valueProduct = ''
+const myOrdersBtn = document.querySelector('.my-orders-btn');
+const ordersListDiv = document.querySelector('.orders-list');
 
-category.forEach(category => {
+let valueProduct = '';
+
+categoryButtons.forEach(category => {
     category.addEventListener('click', () => {
         const categoryValue = category.dataset.value;
         let content;
@@ -28,16 +30,15 @@ category.forEach(category => {
             default:
                 content = '<li>Другие товары</li>';
         }
-        const newDiv = document.createElement('li');
-        newDiv.innerHTML = content;
-        product.innerHTML = '';
-        information.innerHTML= ''
-        form.innerHTML = ''
-        product.appendChild(newDiv);
+
+        productDiv.innerHTML = '';
+        informationDiv.innerHTML = '';
+        formDiv.innerHTML = '';
+        productDiv.innerHTML = content;
     });
 });
 
-product.addEventListener('click', (e) => {
+productDiv.addEventListener('click', (e) => {
     const target = e.target;
     let content = '';
 
@@ -64,21 +65,19 @@ product.addEventListener('click', (e) => {
 
     let newDiv = document.createElement('li');
     newDiv.innerHTML = content;
-    information.innerHTML = '';
-    information.appendChild(newDiv);
-    valueProduct = content
+    informationDiv.innerHTML = '';
+    informationDiv.appendChild(newDiv);
+    valueProduct = content;
 
     const buyButton = document.createElement('button');
     buyButton.className = 'buy-button';
     buyButton.textContent = 'Купить';
-    information.appendChild(buyButton); 
+    informationDiv.appendChild(buyButton);
 
     buyButton.addEventListener('click', () => {
-        let formDiv = document.createElement('div')
-        form.appendChild(formDiv)
-        orderForm.style.display = 'block'
-        information.innerHTML = '';
-        product.innerHTML = '';  
+        orderForm.style.display = 'block';
+        informationDiv.innerHTML = '';
+        productDiv.innerHTML = '';
     });
 });
 
@@ -90,13 +89,13 @@ buttonForm.addEventListener('click', (e) => {
     const descriptionElement = document.createElement('p');
     descriptionElement.textContent = valueProduct;
     blockForm.appendChild(descriptionElement);
-    
-    let invalidFields = []; 
 
-    formValue.forEach((value , key) => {
+    let invalidFields = [];
+
+    formValue.forEach((value, key) => {
         if (!value.trim()) {
             invalidFields.push(key);
-        }else {
+        } else {
             const keyValueElement = document.createElement('p');
             keyValueElement.textContent = `${key}: ${value}`;
             blockForm.appendChild(keyValueElement);
@@ -105,7 +104,16 @@ buttonForm.addEventListener('click', (e) => {
 
     if (invalidFields.length === 0) {
         orderForm.style.display = 'none';
-        form.appendChild(blockForm);
+        formDiv.appendChild(blockForm);
+
+        const order = {
+            product: valueProduct,
+            formData: Array.from(formValue.entries())
+        };
+
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
     } else {
         let errorMessage = 'Пожалуйста, заполните все поля формы корректно: ';
         invalidFields.forEach(field => {
@@ -113,4 +121,83 @@ buttonForm.addEventListener('click', (e) => {
         });
         alert(errorMessage);
     }
+});
+
+myOrdersBtn.addEventListener('click', () => {
+    ordersListDiv.innerHTML = ''; 
+
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    if (orders.length === 0) {
+        ordersListDiv.innerHTML = '<p>У вас пока нет заказов.</p>';
+    } else {
+        orders.forEach((order, index) => {
+            const blockForm = document.createElement('div');
+            blockForm.className = 'requisites';
+            blockForm.style.display = 'block';
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = order.product;
+            blockForm.appendChild(descriptionElement);
+            order.formData.forEach(([key, value]) => {
+                const keyValueElement = document.createElement('p');
+                keyValueElement.textContent = `${key}: ${value}`;
+                blockForm.appendChild(keyValueElement);
+            });
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Удалить';
+            deleteButton.addEventListener('click', () => deleteOrder(index));
+            blockForm.appendChild(deleteButton);
+
+            ordersListDiv.appendChild(blockForm);
+        });
+    }
+
+    ordersListDiv.style.display = 'flex';
+    ordersListDiv.style.flexDirection = 'column';
+});
+
+function deleteOrder(index) {
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    orders.splice(index, 1);
+    localStorage.setItem("orders", JSON.stringify(orders));
+    displayOrders();
+}
+
+function displayOrders() {
+    ordersListDiv.innerHTML = '';
+
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    if (orders.length === 0) {
+        ordersListDiv.innerHTML = '<p>У вас поки немає замовлень.</p>';
+    } else {
+        orders.forEach((order, index) => { 
+            const blockForm = document.createElement('div');
+            blockForm.className = 'requisites';
+            blockForm.style.display = 'block';
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = order.product;
+            blockForm.appendChild(descriptionElement);
+            order.formData.forEach(([key, value]) => {
+                const keyValueElement = document.createElement('p');
+                keyValueElement.textContent = `${key}: ${value}`;
+                blockForm.appendChild(keyValueElement);
+            });
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Удалить';
+            deleteButton.addEventListener('click', () => deleteOrder(index));
+            blockForm.appendChild(deleteButton);
+
+            ordersListDiv.appendChild(blockForm);
+        });
+    }
+
+    ordersListDiv.style.display = 'flex'; 
+    ordersListDiv.style.flexDirection = 'column'; 
+}
+
+myOrdersBtn.addEventListener('click', () => {
+    displayOrders();
 });
