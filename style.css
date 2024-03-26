@@ -1,0 +1,10 @@
+.container{
+    width: 255px;
+    height: 255px;
+    cursor: pointer;
+    background-color: #000000;
+}
+.color-code{
+    font-size: 24px;
+    margin-top: 10px;
+}
