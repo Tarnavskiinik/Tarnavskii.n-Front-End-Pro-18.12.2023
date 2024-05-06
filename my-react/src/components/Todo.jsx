@@ -1,43 +1,68 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, toggleTodo } from '../actions';
+import { fetchTodos, toggleTodo, addTodo } from '../actions';
 
 function Todo() {
   const dispatch = useDispatch();
   const todos = useSelector(state => state.todos);
-  const [inputValue, setInputValue] = useState('');
+  const [error, setError] = useState(null);
+  const [newTodoText, setNewTodoText] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+      .then(() => setLoading(false))
+      .catch(error => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, [dispatch]);
 
   const todoClick = (id) => {
     dispatch(toggleTodo(id));
   };
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    setNewTodoText(e.target.value);
   };
-
-  const formSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTodo(inputValue));
-    setInputValue('');
+    if (newTodoText.trim() !== '') {
+      dispatch(addTodo(newTodoText.trim()));
+      setNewTodoText('');
+    }
   };
 
   return (
     <div>
-      <ul>
-        {todos.map(todo => (
-          <li
-            key={todo.id}
-            onClick={() => todoClick(todo.id)}
-            style={{cursor: 'pointer', textDecoration: todo.done ? 'line-through' : 'none' }}
-          >
-            {todo.text}
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={formSubmit}>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
-        <button type="submit">Добавить</button>
-      </form>
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <>
+          <ul>
+            {todos.map(todo => (
+              <li
+                key={todo.id}
+                onClick={() => todoClick(todo.id)}
+                style={{ cursor: 'pointer', textDecoration: todo.done ? 'line-through' : 'none' }}
+              >
+                {todo.title}
+              </li>
+            ))}
+          </ul>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={newTodoText}
+              onChange={handleInputChange}
+              placeholder="Enter new task"
+            />
+            <button type="submit">Add Task</button>
+          </form>
+        </>
+      )}
     </div>
   );
 }

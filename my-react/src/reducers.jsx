@@ -1,12 +1,12 @@
-import { ADD_TODO, TOGGLE_TODO } from './actions';
+export const ADD_TODO = 'ADD_TODO';
+export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
+export const FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE';
 
 const initialState = {
-  todos: [
-    { id: 1, text: 'Сходить за лебом', done: false },
-    { id: 2, text: 'Сходить на тренинг', done: false },
-    { id: 3, text: 'Отвести сына на тренировку', done: false },
-  ],
-  nextId: 4,
+  todos: [],
+  loading: false,
+  error: null,
 };
 
 const todoReducer = (state = initialState, action) => {
@@ -17,12 +17,11 @@ const todoReducer = (state = initialState, action) => {
         todos: [
           ...state.todos,
           {
-            id: state.nextId,
-            text: action.payload.text,
+            id: state.todos.length + 1,
+            title: action.payload.text,
             done: false,
           },
         ],
-        nextId: state.nextId + 1,
       };
     case TOGGLE_TODO:
       return {
@@ -30,6 +29,19 @@ const todoReducer = (state = initialState, action) => {
         todos: state.todos.map(todo =>
           todo.id === action.payload.id ? { ...todo, done: !todo.done } : todo
         ),
+      };
+    case FETCH_TODOS_SUCCESS:
+      return {
+        ...state,
+        todos: action.payload,
+        loading: false,
+        error: null,
+      };
+    case FETCH_TODOS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     default:
       return state;
