@@ -1,22 +1,20 @@
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {useInput} from "../hooks/useInput"
 
 export const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const email = useInput('')
+    const password = useInput('')
+
     const storedUser = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
+    console.log(email, storedUser.email);
+    console.log(password , storedUser.password);
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-    };
 
     const handleSubmit = () => {
-        if (storedUser && email === storedUser.email && password === storedUser.password) {
+        if(!storedUser) return null;
+
+        if (email.value === storedUser.email && password.value === storedUser.password) {
             navigate('/');
         } else {
             alert('Please try again');
@@ -37,14 +35,14 @@ export const Login = () => {
                                     email</label>
                                 <input type="email" name="email" id="email"
                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="name@company.com" required="" onChange={handleEmail}/>
+                                       placeholder="name@company.com" required=""{...email}/>
                             </div>
                             <div>
                                 <label htmlFor="password"
                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <input type="password" name="password" id="password" placeholder="••••••••"
                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       required="" onChange={handlePassword}/>
+                                       required="" {...password}/>
                             </div>
                             <button type="submit"
                                     onClick={handleSubmit}
@@ -53,7 +51,7 @@ export const Login = () => {
                             </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 You don't have an account? <Link to='/register'
-                                                                 className="font-medium text-primary-600 hover:underline dark:text-primary-500">Register
+                                className="font-medium text-primary-600 hover:underline dark:text-primary-500">Register
                                 here</Link>
                             </p>
                         </form>
