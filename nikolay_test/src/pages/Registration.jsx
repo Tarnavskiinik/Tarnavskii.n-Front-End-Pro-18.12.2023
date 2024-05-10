@@ -2,7 +2,6 @@ import {Link, useNavigate} from "react-router-dom";
 import {useInput} from "../hooks/useInput.jsx";
 import {useDispatch} from "react-redux";
 import { setUser } from "../redux/slices/user/UserSlice.js";
-import { useEffect } from "react";
 
 
 export const Registration = () => {

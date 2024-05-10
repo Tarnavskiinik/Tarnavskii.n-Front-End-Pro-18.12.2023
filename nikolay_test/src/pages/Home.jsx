@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import styles from './Home.module.css'
 
 // TODO: Страница отправки пароля на почту, логина, регистрации не должны быть доступны авторизованным пользователям
 // TODO: Страница Home должна быть доступна только авторизованным пользователям
@@ -16,32 +17,29 @@ export const Home = () => {
         if(!user.name){
             navigate('/login')
         }
-    }, [user , navigate])
+    }, [])
 
     const handleLogout =() =>{
         localStorage.removeItem('user')
-        navigate('/login')
+        navigate('/register')
     }
 
 
   return (
       <div>
-          <h1 className='text-white text-5xl mb-3'>Hello, {user.name}!</h1>
-          <p>Welcome to your first challenge with redux toolkit!</p>
-          <nav>
-              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3'
-                      onClick={() => navigate('/login')}>Go to Login
-              </button>
-              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3 ml-3'
-                      onClick={() => navigate('/register')}>Go to Registration
-              </button>
-              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3 ml-3'
-                      onClick={() => navigate('/email')}>Go to Recovery
-              </button>
-              <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-3 ml-3'
-                        onClick={handleLogout}>Exit
-                </button>
-          </nav>
+            <header className={styles.header}>
+                <div  className="header-nav_block">
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3 ml-3'
+                            onClick={() => navigate('/account')}>Account
+                    </button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3 ml-3'
+                            onClick={() => navigate('/about')}>About
+                    </button>
+                </div>
+                    <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-3 ml-3'
+                                onClick={handleLogout}>Exit
+                    </button>
+            </header>
       </div>
   );
 }

@@ -7,8 +7,6 @@ export const Login = () => {
 
     const storedUser = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
-    console.log(email, storedUser.email);
-    console.log(password , storedUser.password);
 
 
     const handleSubmit = () => {
@@ -29,7 +27,7 @@ export const Login = () => {
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
-                        <form className="space-y-4 md:space-y-6">
+                        <form  className="space-y-4 md:space-y-6">
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your
                                     email</label>

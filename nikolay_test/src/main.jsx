@@ -8,6 +8,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./pages/Login.jsx";
 import { Registration } from "./pages/Registration.jsx";
 import RecoveryPassword from './pages/RecoveryPassword.jsx'
+import { About } from './pages/About.jsx';
+import { Account } from './pages/Account.jsx';
 
 const router = createBrowserRouter([
     {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
     {
         path: "/recovery-password",
         element: <RecoveryPassword/>,
+    },
+    {
+        path: "/about",
+        element: <About/>,
+    },
+    {
+        path: "/account",
+        element: <Account/>,
     },
 ]);
 
