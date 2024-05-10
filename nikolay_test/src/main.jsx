@@ -10,6 +10,7 @@ import { Registration } from "./pages/Registration.jsx";
 import RecoveryPassword from './pages/RecoveryPassword.jsx'
 import { About } from './pages/About.jsx';
 import { Account } from './pages/Account.jsx';
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
     {
@@ -30,11 +31,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/about",
-        element: <About/>,
+        element: <PrivateRoute element={<About />} />,
     },
     {
         path: "/account",
-        element: <Account/>,
+        element: <PrivateRoute element={<Account />} />,
     },
 ]);
 
