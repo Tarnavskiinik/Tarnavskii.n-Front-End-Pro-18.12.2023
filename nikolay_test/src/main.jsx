@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { store } from "./redux/store.js";
 import { Provider } from 'react-redux'
-import { Home } from "./pages/Home.jsx";
+import { Home } from "./pages/Home/Home.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./pages/Login.jsx";
 import { Registration } from "./pages/Registration.jsx";
@@ -11,6 +11,7 @@ import RecoveryPassword from './pages/RecoveryPassword.jsx'
 import { About } from './pages/About.jsx';
 import { Account } from './pages/Account.jsx';
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import {PostList} from './pages/PostList/PostList.jsx'
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: "/account",
         element: <PrivateRoute element={<Account />} />,
     },
+    {
+        path: "/posts",
+        element: <PostList/>,
+    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

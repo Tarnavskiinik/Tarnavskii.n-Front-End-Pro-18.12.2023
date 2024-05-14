@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.containerPost{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.postWrap{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #14b8b8;
+    margin-bottom: 20px;
+    margin: 20px auto;
+    padding: 20px;
+}
+.postWrapPost{
+    width: 70%;
+}
+.postWrapPostTitle{
+    font-weight: bold;
+}
+.postWrapButton{
+    border: 1px solid #14b8b8;
+    padding: 5px;
+}
+.addPost{
+    display: flex;
+    gap: 5px;
+}

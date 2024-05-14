@@ -1,11 +1,12 @@
-import user from '../img/OIP.jpg'
+import userImg from '../img/image.svg'
 
 
 export const About = () =>{
+    const user = JSON.parse(localStorage.getItem('user'));
     return(
         <>
-            <img src={user} alt="user" />
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, perspiciatis? Sed saepe quibusdam optio nam perferendis, praesentium veniam ex aspernatur ut et nesciunt ab quis quasi, laudantium explicabo, fugiat ipsum molestiae! Molestias, odit? Quae possimus officiis officia asperiores sed, fugiat a porro illo aperiam commodi optio mollitia blanditiis dolore ab.</p>
+            <img src={userImg} alt="user" />
+            <p className='text-white text-5xl mb-3'>Welcome to our website!, {user.name}!</p>
         </>
     )
 }
