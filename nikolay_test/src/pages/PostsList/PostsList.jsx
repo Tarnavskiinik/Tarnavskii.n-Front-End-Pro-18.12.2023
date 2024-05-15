@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import style from './PostList.module.css'
+import { useNavigate} from "react-router-dom";
 
-export const PostList = () => {
+export const PostsList = () => {
     const [posts, setPosts] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/posts')
@@ -19,6 +21,9 @@ export const PostList = () => {
     const handleDeletePost = (id) => {
         setPosts(posts.filter(post => post.id !== id));
     };
+    const openPagePost =(postId)=>{
+        navigate(`/posts-page/${postId}`);
+    }
 
     const handleAddPost = () => {
         const newPost = {
@@ -29,7 +34,6 @@ export const PostList = () => {
         setPosts([...posts, newPost]);
         setInputValue('');
     };
-
 
     return (
         <div>
@@ -45,7 +49,7 @@ export const PostList = () => {
                             <p className={style.postWrapPostText}>{post.body}</p>
                         </div>
                         <div>
-                        <button className={style.postWrapButton}>Открыть</button>
+                        <button onClick={() => openPagePost(post.id)} className={style.postWrapButton}>Открыть</button>
                         <button onClick={() => handleDeletePost(post.id)} className={style.postWrapButton}>Удалить</button>
                         </div>
                         </li>

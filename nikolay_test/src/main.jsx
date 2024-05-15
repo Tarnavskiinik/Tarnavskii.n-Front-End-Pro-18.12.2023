@@ -11,7 +11,8 @@ import RecoveryPassword from './pages/RecoveryPassword.jsx'
 import { About } from './pages/About.jsx';
 import { Account } from './pages/Account.jsx';
 import PrivateRoute from "./components/PrivateRoute.jsx";
-import {PostList} from './pages/PostList/PostList.jsx'
+import {PostsList} from './pages/PostsList/PostsList.jsx'
+import {PostPage} from './pages/PostPage/PostPage.jsx'
 
 const router = createBrowserRouter([
     {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/posts",
-        element: <PostList/>,
+        element: <PostsList/>,
+    },
+    {
+        path: "/posts-page/:postId",
+        element: <PostPage/>,
     }
 ]);
 
