@@ -17,9 +17,13 @@ export const Registration = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if(password.value !== confirmPassword.value){
+            return toast.error('Password did not match')
+        }
+
         if (!name.value || !email.value || !password.value || !confirmPassword.value) {
-            toast.error('Пожалуйста, заполните все поля');
-        } else if (password.value === confirmPassword.value) {
+            return toast.error('Please fill in all fields');
+        }
             const user = {
                 name: name.value,
                 email: email.value,
@@ -28,10 +32,7 @@ export const Registration = () => {
             dispatch(setUser(user));
             localStorage.setItem('user', JSON.stringify(user));
             navigate('/login');
-        } else {
-            toast.error('Пароли не совпадают');
-        }
-    };
+}
 
 
     return (
