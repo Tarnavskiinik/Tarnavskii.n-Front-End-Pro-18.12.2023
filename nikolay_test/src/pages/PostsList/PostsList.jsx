@@ -2,40 +2,69 @@ import React, { useState, useEffect } from "react";
 import style from './PostList.module.css';
 import { useNavigate } from "react-router-dom";
 import { useGetData } from "../../hooks/useGetData";
+import { useSelector } from "react-redux";
+import {useDispatch} from "react-redux";
+import { setPosts } from "../../redux/Posts/PostsSlice";
+
+
 
 export const PostsList = () => {
-    const { data: fetchedPosts, loading, error } = useGetData('https://jsonplaceholder.typicode.com/posts');
     const [inputValue, setInputValue] = useState('');
-    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('')
+    const [body, setBody] = useState('');
     const navigate = useNavigate();
+    const posts = useSelector(state => state.posts.posts)
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (fetchedPosts) {
-            setPosts(fetchedPosts);
+    useEffect(()=>{
+
+        if(posts.length === 0){
+            setLoading(true)
+            fetch('https://jsonplaceholder.typicode.com/posts')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response.json()
+            })
+            .then(data =>{
+                data.map((post)=>{
+                    post.comments = []
+                    return post
+                })
+                dispatch(setPosts(data)) 
+            })
+            .catch(error => setError(error))
+            .finally(() =>setLoading(false))
         }
-    }, [fetchedPosts]);
+    }, [])
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
     };
-
+    const handleInputBody = (e) => {
+        setBody(e.target.value)
+    }
     const openPagePost = (postId) => {
-        navigate(`/posts-page/${postId}`);
+        navigate(`/posts-page/${postId}`, { state: { postId } });
     };
 
     const handleAddPost = () => {
         const newPost = {
             id: Date.now(),
             title: inputValue,
+            body: body,
             completed: false
         };
-        setPosts([...posts, newPost]);
+        
+        dispatch(setPosts([...posts, newPost]));
         setInputValue('');
+        setBody('')
     };
-
     const handleDeletePost = (postId) => {
         const updatedPosts = posts.filter(post => post.id !== postId);
-        setPosts(updatedPosts);
+        dispatch(setPosts(updatedPosts));
     };
 
     if (loading) {
@@ -67,6 +96,12 @@ export const PostsList = () => {
                         type="text"
                         value={inputValue}
                         onChange={handleInputChange}
+                    />
+                    <input
+                        style={{ color: 'black', backgroundColor: 'white', marginTop: '20px', marginBottom: '20px', paddingLeft: '5px' }}
+                        type="text"
+                        value={body}
+                        onChange={handleInputBody}
                     />
                     <button className={style.addPostButton} onClick={handleAddPost} type="button">Add Post</button>
                 </div>

@@ -10,7 +10,8 @@ export const useGetData = (url) => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(response.status);
+                
                 }
                 const data = await response.json();
                 setData(data);
