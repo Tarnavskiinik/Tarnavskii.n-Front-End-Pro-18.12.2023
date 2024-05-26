@@ -1,51 +1,48 @@
 import React, { useState, useEffect } from "react";
 import style from './PostList.module.css';
 import { useNavigate } from "react-router-dom";
-import { useGetData } from "../../hooks/useGetData";
-import { useSelector } from "react-redux";
-import {useDispatch} from "react-redux";
-import { setPosts } from "../../redux/Posts/PostsSlice";
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { setPosts, addFavourite, removeFavourite } from "../../redux/Posts/PostsSlice";
 
 export const PostsList = () => {
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
     const [body, setBody] = useState('');
     const navigate = useNavigate();
-    const posts = useSelector(state => state.posts.posts)
+    const posts = useSelector(state => state.posts.posts);
+    const favourites = useSelector(state => state.posts.favourites);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-
-        if(posts.length === 0){
-            setLoading(true)
+    useEffect(() => {
+        if (posts.length === 0) {
+            setLoading(true);
             fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(response.status);
-                }
-                return response.json()
-            })
-            .then(data =>{
-                data.map((post)=>{
-                    post.comments = []
-                    return post
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    return response.json();
                 })
-                dispatch(setPosts(data)) 
-            })
-            .catch(error => setError(error))
-            .finally(() =>setLoading(false))
+                .then(data => {
+                    data.forEach(post => {
+                        post.comments = [];
+                    });
+                    dispatch(setPosts(data));
+                })
+                .catch(error => setError(error))
+                .finally(() => setLoading(false));
         }
-    }, [])
+    }, []);
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
     };
+
     const handleInputBody = (e) => {
-        setBody(e.target.value)
-    }
+        setBody(e.target.value);
+    };
+
     const openPagePost = (postId) => {
         navigate(`/posts-page/${postId}`, { state: { postId } });
     };
@@ -57,14 +54,27 @@ export const PostsList = () => {
             body: body,
             completed: false
         };
-        
+
         dispatch(setPosts([...posts, newPost]));
         setInputValue('');
-        setBody('')
+        setBody('');
     };
+
     const handleDeletePost = (postId) => {
         const updatedPosts = posts.filter(post => post.id !== postId);
         dispatch(setPosts(updatedPosts));
+    };
+
+    const handleToggleFavourite = (post) => {
+        if (favourites.some(fav => fav.id === post.id)) {
+            dispatch(removeFavourite(post.id));
+        } else {
+            dispatch(addFavourite(post));
+        }
+    };
+
+    const navigateToFavourites = () => {
+        navigate('/favourites');
     };
 
     if (loading) {
@@ -86,6 +96,9 @@ export const PostsList = () => {
                             <div>
                                 <button onClick={() => openPagePost(post.id)} className={style.postWrapButton}>Открыть</button>
                                 <button onClick={() => handleDeletePost(post.id)} className={style.postWrapButton}>Удалить</button>
+                                <button onClick={() => handleToggleFavourite(post)} className={style.postWrapButton}>
+                                    {favourites.some(fav => fav.id === post.id) ? 'Удалить из избранного' : 'Добавить в избранное'}
+                                </button>
                             </div>
                         </li>
                     ))}
@@ -105,6 +118,7 @@ export const PostsList = () => {
                     />
                     <button className={style.addPostButton} onClick={handleAddPost} type="button">Add Post</button>
                 </div>
+                <button className={style.favouritesButton} onClick={navigateToFavourites}>Перейти в избранное</button>
             </div>
         </div>
     );

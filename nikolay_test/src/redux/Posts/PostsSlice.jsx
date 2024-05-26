@@ -1,21 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  posts:[],
-  comments: ''
+  posts: [],
+  favourites: []
 };
 
-export const postsSlice = createSlice({
+const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    setPosts: (state , action) => {
+    setPosts(state, action) {
       state.posts = action.payload;
+    },
+    addFavourite(state, action) {
+      state.favourites.push(action.payload);
+    },
+    removeFavourite(state, action) {
+      state.favourites = state.favourites.filter(post => post.id !== action.payload);
     }
-
-  },
+  }
 });
 
-export const { setPosts } = postsSlice.actions;
+export const { setPosts, addFavourite, removeFavourite } = postsSlice.actions;
 
 export default postsSlice.reducer;

@@ -1,0 +1,9 @@
+.postWrapContainer{
+    display: flex;
+    gap: 5px;
+}
+.postWrapButton{
+    border: 1px solid black;
+    padding: 3px 2px;
+    background-color: green;
+}

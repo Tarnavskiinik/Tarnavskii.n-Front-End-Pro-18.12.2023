@@ -13,6 +13,7 @@ import { Account } from './pages/Account.jsx';
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import {PostsList} from './pages/PostsList/PostsList.jsx'
 import {PostPage} from './pages/PostPage/PostPage.jsx'
+import { FavouritesPage } from './pages/FavouritesPage/FavouritesPage.jsx';
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
     {
         path: "/posts-page/:postId",
         element: <PostPage/>,
+    },
+    {
+        path: "/favourites",
+        element: <FavouritesPage/>,
     }
 ]);
 

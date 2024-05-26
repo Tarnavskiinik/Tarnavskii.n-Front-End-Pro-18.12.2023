@@ -4,3 +4,22 @@
 .postWrapText{
     margin: 20px 0px;
 }
+.blockButtons{
+    display: flex;
+    gap: 3px;
+}
+.addPostButton{
+    border: 1px solid black;
+    padding: 3px 2px;
+    background-color: green;
+}
+.editButton{
+    border: 1px solid black;
+    padding: 3px 2px;
+    background-color: green;
+}
+.deleteButton{
+    border: 1px solid black;
+    padding: 3px 2px;
+    background-color: green;
+}
